@@ -19,6 +19,7 @@ void Owen::setup(float x, float y){
     
     speedX 	= ofRandom(-1,1);
     speedY 	= ofRandom(-1,1);
+
     
     owenTest.load("ow.png");
     
@@ -62,6 +63,9 @@ void Owen::update(){
     // increase x and y by adding speedX and speedY
     pointX += speedX;
     pointY += speedY;
+//    
+//    speedX = ofRandom(-1,1);
+//    speedY = ofRandom(-1,2);
     
     //  check for collision, and trigger sounds:
     // horizontal collisions:
@@ -84,10 +88,9 @@ void Owen::update(){
         speedY *= -1;
         wow4.play();
     }
-    //  speed it up:
-    speedX 	*= 1.0f;
-    speedY 	*= 1.0f;
-    
+//    //  speed it up:
+//    speedX 	+= 1.0f;
+//    speedY 	+= 1.0f;
     
 
 }
@@ -95,27 +98,27 @@ void Owen::update(){
 void Owen::draw(){
     
 
-//   owenTest.draw(pointX,pointY);
+   owenTest.draw(pointX,pointY);
 
     
     /*non shader texture binding*/
     
-            float spinX = sin(ofGetElapsedTimef()*.35f);
-            float spinY = cos(ofGetElapsedTimef()*.075f);
-    
-    
-            ofTranslate(pointX, pointY);
-    
-            mTexture.bind();
-    
-    
-            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
-    
-            mSphere.rotate(spinX,1.0,0.0,0.0);
-            mSphere.rotate(spinY,0,1.0,0.0);
-        
-            mTexture.unbind();
-//
+//            float spinX = sin(ofGetElapsedTimef()*.35f);
+//            float spinY = cos(ofGetElapsedTimef()*.075f);
+//    
+//    
+//            ofTranslate(pointX, pointY);
+//    
+//            mTexture.bind();
+//    
+//    
+//            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
+//    
+//            mSphere.rotate(spinX,1.0,0.0,0.0);
+//            mSphere.rotate(spinY,0,1.0,0.0);
+//        
+//            mTexture.unbind();
+
     
 }
 

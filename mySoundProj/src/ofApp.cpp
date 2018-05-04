@@ -41,12 +41,13 @@ void ofApp::setup(){
     
    /*owen object*/
     
-    for(int i=0; i<groupofOwens.size(); i++){
+    for(int i=0; i<multiOwens.size(); i++){
         
-        int randomX = ofRandom( 0, ofGetWidth() );
-        int randomY = ofRandom( 0, ofGetHeight() );
+        int randomX = ofRandom(0, ofGetWidth() );
+        int randomY = ofRandom(0, ofGetHeight() );
         
-        groupofOwens[i].setup(randomX, randomY);
+        
+        multiOwens[i].setup(randomX, randomY);
     }
     
 
@@ -95,8 +96,8 @@ void ofApp::update(){
 //
     
    /*update object*/
-       for(int i=0; i<groupofOwens.size(); i++){
-            groupofOwens[i].update();
+       for(int i=0; i<multiOwens.size(); i++){
+            multiOwens[i].update();
        }
 }
 
@@ -130,8 +131,8 @@ void ofApp::draw(){
     
     /* draw owen's head: */
     
-    for(int i=0; i<groupofOwens.size(); i++){
-        groupofOwens[i].draw();
+    for(int i=0; i<multiOwens.size(); i++){
+        multiOwens[i].draw();
     }
 
     
@@ -214,9 +215,11 @@ void ofApp::mousePressed(int x, int y, int button){
     
     Owen tempOwen;
     tempOwen.setup(x,y);	// setup its initial state
-    groupofOwens.push_back(tempOwen);
+    multiOwens.push_back(tempOwen);
 
     //why does this only make two spheres - kevin
+    
+
 
 //    prevx = x;
 //    prevy = y;

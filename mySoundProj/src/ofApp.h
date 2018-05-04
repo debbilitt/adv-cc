@@ -53,10 +53,10 @@ class ofApp : public ofBaseApp{
     
     Owen mOwen;
     
-//    Owen groupofOwens[6];
+//    Owen multiOwens[6];
     
     
-    vector <Owen> groupofOwens;
+    vector <Owen> multiOwens;
     
     
     

@@ -14,7 +14,7 @@ class Owen {
     
 public:
     
-    // methods, equivalent to specific functions of your class objects
+
     void setup(float x, float y);
     void update();
     void draw();
@@ -28,7 +28,7 @@ public:
     // variables
     float pointX;   // position
     float pointY;
-    float speedY;   // speed and direction
+    float speedY;   // speed
     float speedX;
     float prevx;   // previous location
     float prevy;
@@ -49,8 +49,7 @@ public:
     ofTexture mTexture;
 
     
-    Owen();  // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
-    
+    Owen();  //constructor
     
     
     
