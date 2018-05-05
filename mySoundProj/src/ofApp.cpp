@@ -14,7 +14,7 @@ void ofApp::setup(){
     
     
     bLearnBackground = true;
-    threshold = 80;
+    threshold = 20;
     ofSetBackgroundAuto(false);
  
     
@@ -67,7 +67,7 @@ void ofApp::update(){
 
     /*end webcam*/
     
-   /*update owen object*/
+//   /*update owen object*/
        for(int i=0; i<multiOwens.size(); i++){
             multiOwens[i].update();
        }
@@ -77,64 +77,85 @@ void ofApp::update(){
 void ofApp::draw(){
     
     ofBackground(ofColor::white);
-
+    
+    //if we want to draw an outline around our blob path
+    ofSetColor(ofColor::white);
     ofPushMatrix();
     
     if (bShowVideo) {
         
         myColorImage.draw(0,0);
         grayDifference.draw(myColorImage.getWidth()+100,0);
-        myGrayscaleImage.draw(0,myColorImage.getHeight()+100);
-        myBackground.draw(myGrayscaleImage.getWidth()+100,myColorImage.getHeight()+100);
+        //        myGrayscaleImage.draw(0,myColorImage.getHeight()+100);
+        //        myBackground.draw(myGrayscaleImage.getWidth()+100,myColorImage.getHeight()+100);
         
     }
+
+    ofNoFill();
+    ofSetColor(ofColor::orange);
     
-    
-    ofPopMatrix();
-    
-    //if we want to draw an outline around our blob path
-//    
-//    ofPushMatrix();
-//    ofNoFill();
-//    
-//    ofSetColor(ofColor::orange);
-//    
-//    
 //    ofBeginShape();
 //    //we loop through each of the detected blobs
 //    //contourFinder.nBlobs gives us the number of detected blobs
 //    for (int i = 0; i < myContourFinder.nBlobs; i++){
-//        //each of our blobs contains a vector<ofPoints> pts
-//        for(int j=0; j < myContourFinder.blobs[i].pts.size(); j++){
-//            ofVertex(myContourFinder.blobs[i].pts[j].x, myContourFinder.blobs[i].pts[j].y);
-//        }
-//    }
-    
-    /*
-     * Here is another way of looping through our contour blobs
-     * Comment out the first nested for loop and uncomment this for an alternative method
-     */
-    //  //range-based for loop
-    //	for(auto &blob : contourFinder.blobs){
-    //		vector<ofPoint> pts = blob.pts;
-    //		for(auto pt : pts){
-    //			ofVertex(pt.x, pt.y);
-    //		}
-    //	}
-    
-    
-
-//    ofEndShape();
+//       
+//      //range-based for loop
+//    	for(auto &blob : myContourFinder.blobs){
+//    		vector<ofPoint> pts = blob.pts;
+//    		for(auto pt : pts){
+//    			ofVertex(pt.x, pt.y);
 //    
-//    ofPopMatrix();
+//                ofVec2f temp_contour;
+//                temp_contour.set(pt.x,pt.y);
+//    
+//    /* check distance to owen's head: */
+//                for(int i=0; i<multiOwens.size(); i++){
+//                    multiOwens[i].checkDistance(temp_contour);
+//                }
+//    		}
+//    	}
+//
+//    }
+//
+//    ofEndShape();
     
-    /* draw owen's head: */
+    /*centroid*/
+
+
+//    ofBeginShape();
+//    
+//
+for (int i = 0; i < myContourFinder.nBlobs; i++){
+   
+    for(auto &blob : myContourFinder.blobs){
+        ofFill();
+        ofSetColor(ofColor::orange);
+
+        ofDrawCircle(blob.centroid.x, blob.centroid.y, 20);
+        
+        
+        ofVec2f temp_contour;
+        temp_contour.set(blob.centroid.x,blob.centroid.y);
+        
+        /* draw owen's head: */
+        ofSetColor(ofColor::white);
+        for(int i=0; i<multiOwens.size(); i++){
+            multiOwens[i].checkDistance(temp_contour);
+        }
+        
+    }
+  
+}
+//    ofEndShape();
+
     
+    
+    ofPopMatrix();
+    
+    ofSetColor(ofColor::white);
     for(int i=0; i<multiOwens.size(); i++){
         multiOwens[i].draw();
     }
-
-    
     
 }
 
@@ -182,7 +203,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     
-  
     
     Owen tempOwen;
     tempOwen.setup(x,y);	// setup its initial state

@@ -52,11 +52,7 @@ class ofApp : public ofBaseApp{
     
     
     //owen object
-    
-    Owen mOwen;
 
-    
-    
     vector <Owen> multiOwens;
     
     

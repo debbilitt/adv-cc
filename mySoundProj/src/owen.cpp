@@ -17,6 +17,8 @@ void Owen::setup(float x, float y){
     pointX = x;
     pointY = y;
     
+    position = ofVec2f(pointX,pointY);
+    
     speedX 	= ofRandom(-1,1);
     speedY 	= ofRandom(-1,1);
 
@@ -42,20 +44,18 @@ void Owen::setup(float x, float y){
     
     /*sphere owen*/
     
-    ofLoadImage(mTexture, "owen.jpg");
-    
-//    ofDisableArbTex();
-
-        mSphere.setRadius(70);
-    
-        mTexture.setTextureWrap(GL_NEAREST,GL_NEAREST);
-        mTexture.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-    
-        mSphere.mapTexCoordsFromTexture(mTexture);
-    
-    ofEnableDepthTest();
-    
-    
+//    ofLoadImage(mTexture, "owen.jpg");
+//
+//        mSphere.setRadius(70);
+//    
+//        mTexture.setTextureWrap(GL_NEAREST,GL_NEAREST);
+//        mTexture.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+//    
+//        mSphere.mapTexCoordsFromTexture(mTexture);
+//    
+//    ofEnableDepthTest();
+//    
+//    
     
 }
 
@@ -65,15 +65,13 @@ void Owen::update(){
     // increase x and y by adding speedX and speedY
     pointX += speedX;
     pointY += speedY;
-//    
-//    speedX = ofRandom(-1,1);
-//    speedY = ofRandom(-1,2);
+
     
     //  check for collision, and trigger sounds:
     // horizontal collisions:
     if (pointX <= 0){
         speedX *= -1;
-       wow1.play();
+        wow1.play();
             ofLog() << pointX << endl;
     } else if (pointX >= ofGetWidth()){
         speedX *= -1;
@@ -82,7 +80,7 @@ void Owen::update(){
     }
     // vertical collisions:
     if (pointY <= 0 ){
-               speedY *= -1;
+        speedY *= -1;
         wow3.play();
             ofLog() << pointY << endl;
     } else if (pointY >= ofGetHeight()){
@@ -99,29 +97,47 @@ void Owen::update(){
 
 void Owen::draw(){
     
+    /*draw owen img only*/
+   owenTest.draw(pointX,pointY);
 
-//   owenTest.draw(pointX,pointY);
+    
+    /*texture binding on sphere*/
+    
+//    ofPushMatrix();
+//            float spinX = sin(ofGetElapsedTimef()*.35f);
+//            float spinY = cos(ofGetElapsedTimef()*.075f);
+//    
+//    
+//            ofTranslate(pointX, pointY);
+//    
+//            mTexture.bind();
+//    
+//    
+//            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
+//    
+//            mSphere.rotate(spinX,1.0,0.0,0.0);
+//            mSphere.rotate(spinY,0,1.0,0.0);
+//        
+//            mTexture.unbind();
+//
+//    ofPopMatrix();
+}
 
-    
-    /*non shader texture binding*/
-    
-    ofPushMatrix();
-            float spinX = sin(ofGetElapsedTimef()*.35f);
-            float spinY = cos(ofGetElapsedTimef()*.075f);
-    
-    
-            ofTranslate(pointX, pointY);
-    
-            mTexture.bind();
-    
-    
-            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
-    
-            mSphere.rotate(spinX,1.0,0.0,0.0);
-            mSphere.rotate(spinY,0,1.0,0.0);
-        
-            mTexture.unbind();
 
-    ofPopMatrix();
+void Owen::checkDistance(ofVec2f _contour){
+    
+    ofVec2f contour;
+    contour = _contour;
+    
+    float distance = position.distance(contour);
+    
+    if(distance < 50){
+        ofLog() << "wow" << endl;
+//        speed *= +1;
+    
+    }
+    
+    
+    
 }
 

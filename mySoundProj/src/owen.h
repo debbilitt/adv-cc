@@ -18,12 +18,10 @@ public:
     void setup(float x, float y);
     void update();
     void draw();
-    void mouseDragged(int x, int y, int button);
-    void mousePressed(int x, int y, int button);
-    void mouseMoved(int x, int y );
+    
+    bool if_close;
 
-
-//    void checkDistance(); //check its distance to the other vector
+    void checkDistance(ofVec2f _contour); //check its distance to the other vector
 
     // variables
     float pointX;   // position
@@ -32,7 +30,9 @@ public:
     float speedX;
     float prevx;   // previous location
     float prevy;
-    ofVec2f speed; 
+   
+    ofVec2f speed;
+    ofVec2f position;
     
     /*sound files*/
     ofSoundPlayer wow1;
