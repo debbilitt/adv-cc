@@ -3,20 +3,22 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-//    
-//    myVideoGrabber.setup(320,240);
-//    myColorImage.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
-//    myGrayscaleImage.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
-//    myBackground.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
-//    grayDifference.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
-//
-//
-//    bLearnBackground = true;
-//    threshold = 80;
-//    ofSetBackgroundAuto(false);
+
+    /*setup video*/
+    myVideoGrabber.setup(320,240);
+    
+    myColorImage.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
+    myGrayscaleImage.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
+    myBackground.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
+    grayDifference.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
+    
+    
+    bLearnBackground = true;
+    threshold = 80;
+    ofSetBackgroundAuto(false);
  
     
-   /*owen object*/
+   /*owen object setup*/
     
     for(int i=0; i<multiOwens.size(); i++){
         
@@ -35,32 +37,37 @@ void ofApp::update(){
 
     
     /*webcam updating*/
-//   
-//    myVideoGrabber.update();
-//
-//    if(myVideoGrabber.isFrameNew()){
-//        
-//        myColorImage.setFromPixels(myVideoGrabber.getPixels());
-//        
-//        myGrayscaleImage = myColorImage; //operator overloading
-//        
-//        if (bLearnBackground == true) {
-//            myBackground = myGrayscaleImage;
-//            bLearnBackground == false;
-//            
-//        }
-//        
-//        grayDifference.absDiff(myGrayscaleImage, myBackground); //mom and dad, two parties, takes the difference
-//        grayDifference.threshold(20); // determines the threshold of the gray difference lower is closer to white, higher is closer to black, 255 is the highest
-//        
-//    }
-//    
-//    
-//    myContourFinder.findContours(grayDifference, 10, 100, 10, false);
-
-   /*end webcam*/
     
-   /*update object*/
+    bool bNewFrame = false;
+    
+    myVideoGrabber.update();
+    
+    bNewFrame = myVideoGrabber.isFrameNew();
+    
+    
+    if(bNewFrame){
+        
+        myColorImage.setFromPixels(myVideoGrabber.getPixels());
+        
+        myGrayscaleImage = myColorImage; //operator overloading
+        
+        if (bLearnBackground == true) {
+            myBackground = myGrayscaleImage;
+            bLearnBackground = false;
+            
+        }
+        
+        grayDifference.absDiff(myBackground, myGrayscaleImage); //mom and dad, two parties, takes the difference
+        grayDifference.threshold(threshold); // determines the threshold of the gray difference lower is closer to white, higher is closer to black, 255 is the highest
+        
+    }
+    
+    
+    myContourFinder.findContours(grayDifference, 10, (340*240)/3, 10, false);
+
+    /*end webcam*/
+    
+   /*update owen object*/
        for(int i=0; i<multiOwens.size(); i++){
             multiOwens[i].update();
        }
@@ -68,12 +75,22 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
     
+    ofBackground(ofColor::white);
 
-//
-//    myColorImage.draw(0,0);
-//    grayDifference.draw(myColorImage.getWidth()+100,0);
+    ofPushMatrix();
+    
+    if (bShowVideo) {
+        
+        myColorImage.draw(0,0);
+        grayDifference.draw(myColorImage.getWidth()+100,0);
+        myGrayscaleImage.draw(0,myColorImage.getHeight()+100);
+        myBackground.draw(myGrayscaleImage.getWidth()+100,myColorImage.getHeight()+100);
+        
+    }
+    
+    
+    ofPopMatrix();
     
     //if we want to draw an outline around our blob path
 //    
@@ -124,44 +141,25 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
-//    wow1.setSpeed(ofRandom(0.8, 1.2));
-//    wow2.setSpeed(ofRandom(0.8, 1.2));
-//    wow3.setSpeed(ofRandom(0.8, 1.2));
-//    wow4.setSpeed(ofRandom(0.8, 1.2));
-//
-    
 
-
-    
-//    switch (key) {
-//        case 'a':
-//             wow1.play();
-//            break;
-//        case 's':
-//             wow2.play();
-//            break;
-//        case 'd':
-//             wow3.play();
-//            break;
-//        case 'f':
-//             wow4.play();
-//        case 'g':
-//            wow1.play();
-//            break;
-//        case 'h':
-//            wow2.play();
-//            break;
-//        case'j':
-//            wow3.play();
-//            break;
-//        case'k':
-//            wow4.play();
-//            break;
-//
-//        default:
-//            break;
-//    }
-    
+    /*toggle background, adjust threshold*/
+    switch (key){
+        case 'w':
+            ofBackground(ofColor::white);
+            bShowVideo = !bShowVideo;
+            break;
+        case 'r':
+            //something to reset background
+            break;
+        case '+':
+            threshold ++;
+            if (threshold > 255) threshold = 255;
+            break;
+        case '-':
+            threshold --;
+            if (threshold < 0) threshold = 0;
+            break;
+    }
 }
 
 //--------------------------------------------------------------
@@ -178,33 +176,18 @@ void ofApp::mouseMoved(int x, int y ){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     
-    
-//    velocityX += (x - prevx) / 10.0f;
-//    velocityY += (y - prevy) / 10.0f;
- 
-    // store the previous mouse position:
-//    prevx = x;
-//    prevy = y;
 
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     
-//    mySound.setSpeed(ofRandom(0.8, 1.2));
-//    mySound.play();
-    
+  
     
     Owen tempOwen;
     tempOwen.setup(x,y);	// setup its initial state
     multiOwens.push_back(tempOwen);
 
-    //why does this only make two spheres - kevin
-    
-
-
-//    prevx = x;
-//    prevy = y;
 
 
 }
