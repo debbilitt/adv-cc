@@ -32,6 +32,7 @@ public:
     float speedX;
     float prevx;   // previous location
     float prevy;
+    ofVec2f speed; 
     
     /*sound files*/
     ofSoundPlayer wow1;

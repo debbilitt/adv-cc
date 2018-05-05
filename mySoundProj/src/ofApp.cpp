@@ -3,41 +3,18 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
- 
-    /*load sounds*/
-//    wow1.load("16.mp3");
-//    wow1.setMultiPlay(true);
-   
-//    wow2.load("1.mp3");
-//    wow2.setMultiPlay(true);
-
-//    wow3.load("2.mp3");
-//    wow3.setMultiPlay(true);
-  
-//    wow4.load("4.mp3");
-//    wow4.setMultiPlay(true);
-   
-    /*load images*/
-//    owen.load("ow.png");
-//    wowtron.load("wowtron.png");
 //    
-   
-    
-    /*grab texture for sphere*/
-    
-    
-//    ofLoadImage(mTexture, "owen.jpg");
-//    
-//    ofDisableArbTex();
-//    
-//    mSphere.setRadius(70);
+//    myVideoGrabber.setup(320,240);
+//    myColorImage.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
+//    myGrayscaleImage.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
+//    myBackground.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
+//    grayDifference.allocate(myVideoGrabber.getWidth(),myVideoGrabber.getHeight());
 //
-//    mTexture.setTextureWrap(GL_NEAREST,GL_NEAREST);
-//    mTexture.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-//    
-//    mSphere.mapTexCoordsFromTexture(mTexture);
-//    
-//    ofEnableDepthTest();
+//
+//    bLearnBackground = true;
+//    threshold = 80;
+//    ofSetBackgroundAuto(false);
+ 
     
    /*owen object*/
     
@@ -55,45 +32,33 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+
     
-//    ofBackground(ofColor::darkBlue);
-    
-    // update the sound playing system:
-    ofSoundUpdate();
-    
-//    wowtron.update();
-    
-    
-//    // (1) we increase x and y by adding velocityX and velocityY
-//    pointX += velocityX;
-//    pointY += velocityY;
+    /*webcam updating*/
+//   
+//    myVideoGrabber.update();
+//
+//    if(myVideoGrabber.isFrameNew()){
+//        
+//        myColorImage.setFromPixels(myVideoGrabber.getPixels());
+//        
+//        myGrayscaleImage = myColorImage; //operator overloading
+//        
+//        if (bLearnBackground == true) {
+//            myBackground = myGrayscaleImage;
+//            bLearnBackground == false;
+//            
+//        }
+//        
+//        grayDifference.absDiff(myGrayscaleImage, myBackground); //mom and dad, two parties, takes the difference
+//        grayDifference.threshold(20); // determines the threshold of the gray difference lower is closer to white, higher is closer to black, 255 is the highest
+//        
+//    }
 //    
-//    // (2) check for collision, and trigger sounds:
-//    // horizontal collisions:
-//    if (pointX < 0){
-//        pointX = 0;
-//        velocityX *= -1;
-//        wow1.play();
-//    } else if (pointX > ofGetWidth()){
-//        pointX = ofGetWidth();
-//        velocityX *= -1;
-//        wow2.play();
-//    }
-//    // vertical collisions:
-//    if (pointY < 0 ){
-//        pointY = 0;
-//        velocityY *= -1;
-//        wow3.play();
-//    } else if (pointY > ofGetHeight()){
-//        pointY = ofGetHeight();
-//        velocityY *= -1;
-//        wow4.play();
-//    }
-//    // (3) slow down velocity:
-//    velocityX 	*= 0.996f;
-//    velocityY 	*= 0.996f;
-//
-//
+//    
+//    myContourFinder.findContours(grayDifference, 10, 100, 10, false);
+
+   /*end webcam*/
     
    /*update object*/
        for(int i=0; i<multiOwens.size(); i++){
@@ -105,29 +70,46 @@ void ofApp::update(){
 void ofApp::draw(){
 
     
-//    wowtron.draw(0,ofGetHeight()/4);
+
+//
+//    myColorImage.draw(0,0);
+//    grayDifference.draw(myColorImage.getWidth()+100,0);
     
+    //if we want to draw an outline around our blob path
+//    
+//    ofPushMatrix();
+//    ofNoFill();
+//    
+//    ofSetColor(ofColor::orange);
+//    
+//    
+//    ofBeginShape();
+//    //we loop through each of the detected blobs
+//    //contourFinder.nBlobs gives us the number of detected blobs
+//    for (int i = 0; i < myContourFinder.nBlobs; i++){
+//        //each of our blobs contains a vector<ofPoints> pts
+//        for(int j=0; j < myContourFinder.blobs[i].pts.size(); j++){
+//            ofVertex(myContourFinder.blobs[i].pts[j].x, myContourFinder.blobs[i].pts[j].y);
+//        }
+//    }
     
-    /*non shader texture binding*/
+    /*
+     * Here is another way of looping through our contour blobs
+     * Comment out the first nested for loop and uncomment this for an alternative method
+     */
+    //  //range-based for loop
+    //	for(auto &blob : contourFinder.blobs){
+    //		vector<ofPoint> pts = blob.pts;
+    //		for(auto pt : pts){
+    //			ofVertex(pt.x, pt.y);
+    //		}
+    //	}
     
-//        float spinX = sin(ofGetElapsedTimef()*.35f);
-//        float spinY = cos(ofGetElapsedTimef()*.075f);
-//    
-//    
-//        ofTranslate(pointX, pointY);
-//    
-//        mTexture.bind();
-//    
-//    
-//        mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
-//    
-//        mSphere.rotate(spinX,1.0,0.0,0.0);
-//        mSphere.rotate(spinY,0,1.0,0.0);
-//    
-//        mTexture.unbind();
     
 
-    
+//    ofEndShape();
+//    
+//    ofPopMatrix();
     
     /* draw owen's head: */
     

@@ -20,6 +20,8 @@ void Owen::setup(float x, float y){
     speedX 	= ofRandom(-1,1);
     speedY 	= ofRandom(-1,1);
 
+    speed = ofVec2f(speedX,speedY);
+ 
     
     owenTest.load("ow.png");
     
@@ -42,7 +44,7 @@ void Owen::setup(float x, float y){
     
     ofLoadImage(mTexture, "owen.jpg");
     
-    ofDisableArbTex();
+//    ofDisableArbTex();
 
         mSphere.setRadius(70);
     
@@ -69,24 +71,24 @@ void Owen::update(){
     
     //  check for collision, and trigger sounds:
     // horizontal collisions:
-    if (pointX < 0){
-        pointX = 0;
+    if (pointX <= 0){
         speedX *= -1;
        wow1.play();
-    } else if (pointX > ofGetWidth()){
-        pointX = ofGetWidth();
+            ofLog() << pointX << endl;
+    } else if (pointX >= ofGetWidth()){
         speedX *= -1;
         wow2.play();
+            ofLog() << pointX << endl;
     }
     // vertical collisions:
-    if (pointY < 0 ){
-        pointY = 0;
-        speedY *= -1;
+    if (pointY <= 0 ){
+               speedY *= -1;
         wow3.play();
-    } else if (pointY > ofGetHeight()){
-        pointY = ofGetHeight();
+            ofLog() << pointY << endl;
+    } else if (pointY >= ofGetHeight()){
         speedY *= -1;
         wow4.play();
+        ofLog() << pointY << endl;
     }
 //    //  speed it up:
 //    speedX 	+= 1.0f;
@@ -98,27 +100,28 @@ void Owen::update(){
 void Owen::draw(){
     
 
-   owenTest.draw(pointX,pointY);
+//   owenTest.draw(pointX,pointY);
 
     
     /*non shader texture binding*/
     
-//            float spinX = sin(ofGetElapsedTimef()*.35f);
-//            float spinY = cos(ofGetElapsedTimef()*.075f);
-//    
-//    
-//            ofTranslate(pointX, pointY);
-//    
-//            mTexture.bind();
-//    
-//    
-//            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
-//    
-//            mSphere.rotate(spinX,1.0,0.0,0.0);
-//            mSphere.rotate(spinY,0,1.0,0.0);
-//        
-//            mTexture.unbind();
-
+    ofPushMatrix();
+            float spinX = sin(ofGetElapsedTimef()*.35f);
+            float spinY = cos(ofGetElapsedTimef()*.075f);
     
+    
+            ofTranslate(pointX, pointY);
+    
+            mTexture.bind();
+    
+    
+            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
+    
+            mSphere.rotate(spinX,1.0,0.0,0.0);
+            mSphere.rotate(spinY,0,1.0,0.0);
+        
+            mTexture.unbind();
+
+    ofPopMatrix();
 }
 
