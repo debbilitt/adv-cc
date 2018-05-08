@@ -76,7 +76,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    ofBackground(ofColor::white);
+    ofBackground(ofColor::dimGray);
     
     ofSetColor(ofColor::white);
     
@@ -90,12 +90,9 @@ void ofApp::draw(){
         
     }
 
-    ofNoFill();
-    ofSetColor(ofColor::orange);
-
 
     /*draw bounding rectangle of blobs for debugging*/
-    
+
 //        myContourFinder.draw(0, 0, ofGetWidth(), ofGetHeight());
 //        for(int i = 0; i < myContourFinder.nBlobs; i++) {
 //            ofRectangle r = myContourFinder.blobs.at(i).boundingRect;
@@ -103,55 +100,22 @@ void ofApp::draw(){
 //        }
 
     
-    
-/*  trying out different methods --blob centroid detection */
-    
-//    for (int i = 0; i < myContourFinder.nBlobs; i++){
-//
-//    
-//    
-//            for(auto &blob : myContourFinder.blobs){
-//                    ofFill();
-//                    ofSetColor(ofColor::orange);
-//                    ofDrawCircle(blob.centroid.x, blob.centroid.y, 20);
-//    
-//                    ofVec2f temp_contour;
-//                    temp_contour.set(blob.centroid.x,blob.centroid.y);
-//                
-//                for (int i =0; i < multiOwens.size(); i++) {
-//                    
-//                    ofVec2f owenPos;
-//                    owenPos.set(multiOwens[i].pointX, multiOwens[i].pointY);
-//                    
-//                    float distance = owenPos.distance(temp_contour);
-//                    
-//                    /*if owen is close to body, bounce owen's head*/
-//                    
-//                    if (distance < 20) {
-//                        multiOwens[i].bounceHead();
-//                    }
-//                }
-//
-//           }
-//    }
-//    
-    
- /*full contour detection seems to work better*/
+ /*full contour detection seems to work best*/
     
     
-  ofBeginShape();
-    //we loop through each of the detected blobs
-    //contourFinder.nBlobs gives us the number of detected blobs
+//  ofNoFill();
+//  ofSetColor(ofColor::orange);
+//  ofBeginShape();
+    
+    /* loop through each of the detected blobs*/
+    /*contourFinder.nBlobs gives us the number of detected blobs*/
     for (int i = 0; i < myContourFinder.nBlobs; i++){
        
-      //range-based for loop
     	for(auto &blob : myContourFinder.blobs){
-            
-        
             
     		vector<ofPoint> pts = blob.pts;
     		for(auto pt : pts){
-    			ofVertex(pt.x, pt.y);
+//    			ofVertex(pt.x, pt.y);
     
                 ofVec2f temp_contour;
                 temp_contour.set(pt.x,pt.y);
@@ -177,7 +141,7 @@ void ofApp::draw(){
 
     }
 
-ofEndShape();
+//ofEndShape();
 
 
 ofPopMatrix();

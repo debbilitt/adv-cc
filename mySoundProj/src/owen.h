@@ -1,6 +1,6 @@
 //
 //  owen.h
-//  mySoundProj
+//  OwenPong
 //
 //  Created by Debbi Litt on 5/3/18.
 //
@@ -21,7 +21,7 @@ public:
 
     void bounceHead(); //check its distance to the other vector
 
-    bool distanceClose;
+    bool bouncedOwen;
     
     
     /*variables*/
@@ -43,6 +43,7 @@ public:
     
     /*load an owen*/
     ofImage owen;
+    ofImage bOwen;
 
     
     
@@ -50,6 +51,7 @@ public:
     
     ofSpherePrimitive mSphere;
     ofTexture mTexture;
+    ofTexture mTexture2;
 
     
     Owen();  //constructor

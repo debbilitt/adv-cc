@@ -1,6 +1,6 @@
 //
 //  owen.cpp
-//  mySoundProj
+//  OwenPong
 //
 //  Created by Debbi Litt on 5/3/18.
 //
@@ -22,11 +22,13 @@ void Owen::setup(float x, float y){
     speedX 	= ofRandom(-1,1);
     speedY 	= ofRandom(-1,1);
 
+    /*image loading*/
     
     owen.load("ow.png");
+    bOwen.load("ow2.png");
     
     
-    //load sounds
+    /*load sounds*/
     wow1.load("16.mp3");
     wow1.setMultiPlay(true);
     
@@ -45,13 +47,19 @@ void Owen::setup(float x, float y){
     /*sphere owen*/
     
         ofLoadImage(mTexture, "owen.jpg");
+        ofLoadImage(mTexture2, "owen2.jpg");
 
-        mSphere.setRadius(40);
+        mSphere.setRadius(45);
     
         mTexture.setTextureWrap(GL_NEAREST,GL_NEAREST);
         mTexture.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
     
+        mTexture2.setTextureWrap(GL_NEAREST,GL_NEAREST);
+        mTexture2.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+    
         mSphere.mapTexCoordsFromTexture(mTexture);
+    
+        mSphere.mapTexCoordsFromTexture(mTexture2);
     
         ofEnableDepthTest();
     
@@ -97,8 +105,13 @@ void Owen::draw(){
     
     
     /*draw owen img only using this for debug*/
-//   owen.draw(pointX,pointY);
-
+    
+//        if(!bouncedOwen){
+//     owen.draw(pointX,pointY);
+//        } else {
+//      bOwen.draw(pointX,pointY);
+//            
+//        }
     
     /*texture binding on sphere*/
     
@@ -109,6 +122,8 @@ void Owen::draw(){
     
             ofTranslate(pointX, pointY);
     
+    
+    if(!bouncedOwen){
             mTexture.bind();
     
             mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
@@ -117,6 +132,22 @@ void Owen::draw(){
             mSphere.rotate(spinY,0,1.0,0.0);
         
             mTexture.unbind();
+    
+    } else {
+    
+        mTexture2.bind();
+        
+        mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
+        
+        mSphere.rotate(spinX,1.0,0.0,0.0);
+        mSphere.rotate(spinY,0,1.0,0.0);
+        
+        mTexture2.unbind();
+    
+    }
+    
+    
+    
 
     ofPopMatrix();
     
@@ -126,6 +157,7 @@ void Owen::draw(){
 
 void Owen::bounceHead(){
 
+    bouncedOwen = true;
     
     speedX ++;
     speedY ++;
