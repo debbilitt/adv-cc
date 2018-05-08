@@ -26,25 +26,14 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofSoundPlayer wow1;
-    ofSoundPlayer wow2;
-    ofSoundPlayer wow3;
-    ofSoundPlayer wow4;
     
-//    ofVec2f owenPos;
-    
-    ofImage owen;
-    ofImage wowtron;
-    
-
-
-    //webcam detection
+    /*webcam detection*/
     
     ofVideoGrabber myVideoGrabber;
     ofxCvColorImage myColorImage;
     ofxCvGrayscaleImage myGrayscaleImage;
     ofxCvGrayscaleImage myBackground;
-    ofxCvGrayscaleImage grayDifference; //can use this in a Fbo mask
+    ofxCvGrayscaleImage grayDifference;
     
     ofxCvContourFinder myContourFinder;
 

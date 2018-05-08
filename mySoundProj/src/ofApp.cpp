@@ -85,17 +85,59 @@ void ofApp::draw(){
     if (bShowVideo) {
         
         myColorImage.draw(0,0);
-//        grayDifference.draw(myColorImage.getWidth()+100,0);
-        //   myGrayscaleImage.draw(0,myColorImage.getHeight()+100);
-        //    myBackground.draw(myGrayscaleImage.getWidth()+100,myColorImage.getHeight()+100);
+        //   grayDifference.draw(myColorImage.getWidth()+100,0);
+
         
     }
 
     ofNoFill();
     ofSetColor(ofColor::orange);
 
+
+    /*draw bounding rectangle of blobs for debugging*/
     
-    /*contour detection*/
+//        myContourFinder.draw(0, 0, ofGetWidth(), ofGetHeight());
+//        for(int i = 0; i < myContourFinder.nBlobs; i++) {
+//            ofRectangle r = myContourFinder.blobs.at(i).boundingRect;
+//    
+//        }
+
+    
+    
+/*  trying out different methods --blob centroid detection */
+    
+//    for (int i = 0; i < myContourFinder.nBlobs; i++){
+//
+//    
+//    
+//            for(auto &blob : myContourFinder.blobs){
+//                    ofFill();
+//                    ofSetColor(ofColor::orange);
+//                    ofDrawCircle(blob.centroid.x, blob.centroid.y, 20);
+//    
+//                    ofVec2f temp_contour;
+//                    temp_contour.set(blob.centroid.x,blob.centroid.y);
+//                
+//                for (int i =0; i < multiOwens.size(); i++) {
+//                    
+//                    ofVec2f owenPos;
+//                    owenPos.set(multiOwens[i].pointX, multiOwens[i].pointY);
+//                    
+//                    float distance = owenPos.distance(temp_contour);
+//                    
+//                    /*if owen is close to body, bounce owen's head*/
+//                    
+//                    if (distance < 20) {
+//                        multiOwens[i].bounceHead();
+//                    }
+//                }
+//
+//           }
+//    }
+//    
+    
+ /*full contour detection seems to work better*/
+    
     
   ofBeginShape();
     //we loop through each of the detected blobs
@@ -104,6 +146,9 @@ void ofApp::draw(){
        
       //range-based for loop
     	for(auto &blob : myContourFinder.blobs){
+            
+        
+            
     		vector<ofPoint> pts = blob.pts;
     		for(auto pt : pts){
     			ofVertex(pt.x, pt.y);
@@ -114,92 +159,28 @@ void ofApp::draw(){
     /* check distance to owen's head: */
 
                 for (int i =0; i < multiOwens.size(); i++) {
-                    
-//                float distance = ofDist(pt.x,pt.y, multiOwens[i].pointX, multiOwens[i].pointY);
-                    
+                                        
                   ofVec2f owenPos;
                   owenPos.set(multiOwens[i].pointX, multiOwens[i].pointY);
 
                   float distance = owenPos.distance(temp_contour);
-
-//                  ofVec2f speed;
-//
-//                  speed.set(multiOwens[i].speedX, multiOwens[i].speedY);
+                    
+                    /*if owen is close to body, bounce owen's head*/
 
                     if (distance < 20) {
-//                     speed *= -1;
-//                        
-//                    multiOwens[i].speedX *= -2;
-//                    multiOwens[i].speedY *= -1;
-//
-                        
-                        multiOwens[i].checkDistance();
-                    ofLog() << "wow" << endl;
+                        multiOwens[i].bounceHead();
                     }
                 }
 
-                
     		}
     	}
 
     }
 
-    ofEndShape();
+ofEndShape();
 
 
-/*draw bounding rectangle of blobs*/
-//    myContourFinder.draw(0, 0, ofGetWidth(), ofGetHeight());
-//    for(int i = 0; i < myContourFinder.nBlobs; i++) {
-//        ofRectangle r = myContourFinder.blobs.at(i).boundingRect;
-//        
-//    }
-//    
-    
-    
-/*blob centroid detection*/
-
-//    for (int i = 0; i < myContourFinder.nBlobs; i++){
-//
-//        for(auto &blob : myContourFinder.blobs){
-//                ofFill();
-//                ofSetColor(ofColor::orange);
-//                ofDrawCircle(blob.centroid.x, blob.centroid.y, 20);
-//
-//                ofVec2f temp_contour;
-//                temp_contour.set(blob.centroid.x,blob.centroid.y);
-//
-//                ofVec2f temp_contourNorm = temp_contour.getNormalized();
-//            
-//        
-//        /* move owen's head: */
-//        ofSetColor(ofColor::white);
-//        for (int i =0; i < multiOwens.size(); i++) {
-//
-//            ofVec2f  owenPos;
-//            owenPos.set(multiOwens[i].pointX, multiOwens[i].pointY);
-//            
-//           ofVec2f owenPosNorm = owenPos.getNormalized();
-//            
-//             float distance = owenPos.distance(temp_contour);
-//
-//      float distance = ofDist(blob.centroid.x,blob.centroid.y, multiOwens[i].pointX, multiOwens[i].pointY);
-//          
-//            if (distance < 50) {
-//                multiOwens[i].speedX *= -1;
-//               multiOwens[i].speedY *= -1;
-//                multiOwens[i].speedX++;
-//
-//                ofLog() << "wow" << endl;
-//            } else {
-//            
-//                ofLog() << "not close" << endl;
-//            }
-//        }
-//    }
-//  
-//}
-
-    ofPopMatrix();
+ofPopMatrix();
  
     
     
@@ -209,17 +190,20 @@ void ofApp::draw(){
         multiOwens[i].draw();
     }
     
-    ofSetColor(ofColor::blueSteel);
-    ofDrawBitmapString("Press w to toggle video and s to reset video background", 0, 10);
-    ofDrawBitmapString("Press d to remove an Owen or r to reset", 0, 30);
     
+    ofPushMatrix();
+    ofSetColor(ofColor::blueSteel); /*the obvious choice*/
+    ofDrawBitmapString("Click to add an owen", 5, 10);
+    ofDrawBitmapString("Press w to toggle video and s to reset video background", 5, 30);
+    ofDrawBitmapString("Press d to remove one Owen or r to reset to 0", 5, 50);
+    ofPopMatrix();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
 
-    /*toggle background, adjust threshold*/
+    /*toggle background, remove owens, adjust threshold*/
     switch (key){
         case 'w':
             ofBackground(ofColor::white);
@@ -227,6 +211,7 @@ void ofApp::keyPressed(int key){
             break;
         case 's':
             bLearnBackground = true;
+            //also clears your owens
         case 'd':
             for (int i =0; i < multiOwens.size(); i++) {
             multiOwens.erase(multiOwens.begin()+i);
@@ -256,8 +241,6 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-    
-
 
 
 }

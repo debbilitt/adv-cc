@@ -22,10 +22,9 @@ void Owen::setup(float x, float y){
     speedX 	= ofRandom(-1,1);
     speedY 	= ofRandom(-1,1);
 
-    speed = ofVec2f(speedX,speedY);
-
     
-    owenTest.load("ow.png");
+    owen.load("ow.png");
+    
     
     //load sounds
     wow1.load("16.mp3");
@@ -45,16 +44,16 @@ void Owen::setup(float x, float y){
     
     /*sphere owen*/
     
-//        ofLoadImage(mTexture, "owen.jpg");
-//
-//        mSphere.setRadius(70);
-//    
-//        mTexture.setTextureWrap(GL_NEAREST,GL_NEAREST);
-//        mTexture.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-//    
-//        mSphere.mapTexCoordsFromTexture(mTexture);
-//    
-//    ofEnableDepthTest();
+        ofLoadImage(mTexture, "owen.jpg");
+
+        mSphere.setRadius(40);
+    
+        mTexture.setTextureWrap(GL_NEAREST,GL_NEAREST);
+        mTexture.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+    
+        mSphere.mapTexCoordsFromTexture(mTexture);
+    
+        ofEnableDepthTest();
     
     
     
@@ -63,12 +62,12 @@ void Owen::setup(float x, float y){
 void Owen::update(){
     
 
-    // increase x and y by adding speedX and speedY
+    /* increase x and y by adding speedX and speedY*/
     pointX += speedX;
     pointY += speedY;
 
-    //  check for collision, and trigger sounds:
-    // horizontal collisions:
+    /*  check for collision, and trigger sounds: */
+
     if (pointX <= 0){
         speedX *= -1.0f;
         wow1.play();
@@ -78,7 +77,7 @@ void Owen::update(){
         wow2.play();
             ofLog() << pointX << endl;
     }
-    // vertical collisions:
+
     if (pointY <= 0 ){
         speedY *= -1.0f;
         wow3.play();
@@ -88,11 +87,8 @@ void Owen::update(){
         wow4.play();
         ofLog() << pointY << endl;
     }
-//
-//    //slow down speed
-    
-    speedX *= 0.96f;
-    speedY *= 0.96f;
+
+
 
 
 }
@@ -101,46 +97,54 @@ void Owen::draw(){
     
     
     /*draw owen img only using this for debug*/
-   owenTest.draw(pointX,pointY);
+//   owen.draw(pointX,pointY);
 
     
     /*texture binding on sphere*/
     
-//    ofPushMatrix();
-//            float spinX = sin(ofGetElapsedTimef()*.35f);
-//            float spinY = cos(ofGetElapsedTimef()*.075f);
-//    
-//    
-//            ofTranslate(pointX, pointY);
-//    
-//            mTexture.bind();
-//    
-//            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
-//    
-//            mSphere.rotate(spinX,1.0,0.0,0.0);
-//            mSphere.rotate(spinY,0,1.0,0.0);
-//        
-//            mTexture.unbind();
-//
-//    ofPopMatrix();
+    ofPushMatrix();
+            float spinX = sin(ofGetElapsedTimef()*.35f);
+            float spinY = cos(ofGetElapsedTimef()*.075f);
+    
+    
+            ofTranslate(pointX, pointY);
+    
+            mTexture.bind();
+    
+            mSphere.draw(ofPolyRenderMode::OF_MESH_FILL);
+    
+            mSphere.rotate(spinX,1.0,0.0,0.0);
+            mSphere.rotate(spinY,0,1.0,0.0);
+        
+            mTexture.unbind();
+
+    ofPopMatrix();
+    
 }
 
-/*this is doing SOMETHING but kinda goes nuts!*/
+/*this is working yay!*/
 
-void Owen::checkDistance(){
+void Owen::bounceHead(){
 
     
     speedX ++;
     speedY ++;
+
     
-    
-    
-    //slow down speed
+    //slow down speed if Owen gets too fast
     
     if(speedX >= 10.0f | speedY >= 10.0f){
         
         speedX -= ofRandom(0,2);
         speedY -= ofRandom(0,2);
+        
+    } else {
+        //slow down speed
+        
+        speedX *= 0.96f;
+        speedY *= 0.96f;
+
+    
     }
     
 

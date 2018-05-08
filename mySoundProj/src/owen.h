@@ -18,17 +18,18 @@ public:
     void setup(float x, float y);
     void update();
     void draw();
-    
+
+    void bounceHead(); //check its distance to the other vector
+
     bool distanceClose;
-
-    void checkDistance(); //check its distance to the other vector
-
-    // variables
+    
+    
+    /*variables*/
     float pointX;   // position
     float pointY;
     float speedY;   // speed
     float speedX;
-    float prevx;   // previous location
+    float prevx;   // previous location, not sure if I need this 
     float prevy;
    
     ofVec2f speed;
@@ -41,7 +42,7 @@ public:
     ofSoundPlayer wow4;
     
     /*load an owen*/
-    ofImage owenTest;
+    ofImage owen;
 
     
     
