@@ -46,8 +46,8 @@ void Owen::setup(float x, float y){
     
     /*sphere owen*/
     
-        ofLoadImage(mTexture, "owen.jpg");
-        ofLoadImage(mTexture2, "owen2.jpg");
+        ofLoadImage(mTexture, "owen-wrap1.png");
+        ofLoadImage(mTexture2, "owen-wrap.png");
 
         mSphere.setRadius(45);
     
@@ -166,17 +166,12 @@ void Owen::bounceHead(){
     
     speedX ++;
     speedY ++;
-
+    
     
     //control the speed if Owen gets too fast
     
-    if(speedX >= 7.0f | speedY >= 7.0f){
-        
-        speedX *= 0.96f;
-        speedY *= 0.96f;
-        
-        
-    }
+    speedX *= 0.96f;
+    speedY *= 0.96f;
     
     
 
