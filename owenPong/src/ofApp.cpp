@@ -142,18 +142,11 @@ void ofApp::draw(){
     }
 
 //ofEndShape();
+    
 
 
 ofPopMatrix();
  
-    
-    
-    
-    ofSetColor(ofColor::white);
-    for(int i=0; i<multiOwens.size(); i++){
-        multiOwens[i].draw();
-    }
-    
     
     ofPushMatrix();
     ofSetColor(ofColor::blueSteel); /*the obvious choice*/
@@ -161,6 +154,13 @@ ofPopMatrix();
     ofDrawBitmapString("Press w to toggle video and s to reset video background", 5, 30);
     ofDrawBitmapString("Press d to remove one Owen or r to reset to 0", 5, 50);
     ofPopMatrix();
+    
+    
+    ofSetColor(ofColor::white);
+    for(int i=0; i<multiOwens.size(); i++){
+        multiOwens[i].draw();
+    }
+    
 }
 
 //--------------------------------------------------------------

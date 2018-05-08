@@ -106,12 +106,17 @@ void Owen::draw(){
     
     /*draw owen img only using this for debug*/
     
-//        if(!bouncedOwen){
-//     owen.draw(pointX,pointY);
+//    ofPushMatrix();
+//
+//    ofTranslate(pointX, pointY);
+//    
+//        if(bouncedOwen){
+//      bOwen.draw(0,0);
 //        } else {
-//      bOwen.draw(pointX,pointY);
+//      owen.draw(0,0);
 //            
 //        }
+//    ofPopMatrix();
     
     /*texture binding on sphere*/
     
@@ -163,21 +168,16 @@ void Owen::bounceHead(){
     speedY ++;
 
     
-    //slow down speed if Owen gets too fast
+    //control the speed if Owen gets too fast
     
-    if(speedX >= 10.0f | speedY >= 10.0f){
-        
-        speedX -= ofRandom(0,2);
-        speedY -= ofRandom(0,2);
-        
-    } else {
-        //slow down speed
+    if(speedX >= 7.0f | speedY >= 7.0f){
         
         speedX *= 0.96f;
         speedY *= 0.96f;
-
-    
+        
+        
     }
+    
     
 
     
