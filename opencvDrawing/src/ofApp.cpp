@@ -63,15 +63,34 @@ void ofApp::draw(){
 //      for (int i = 0; i < contourFinder.nBlobs; i++){
 //		ofSetColor(ofColor::fuchsia);
 //		ofFill();
-//		//ofDrawEllipse(contourFinder.blobs[i].boundingRect.getCenter(), 20,20);
-//        ofDrawEllipse(contourFinder.blobs[i].centroid, 20,20);
+//		ofDrawEllipse(contourFinder.blobs[i].boundingRect.getCenter(), 20,20);
+////        ofDrawEllipse(contourFinder.blobs[i].centroid, 20,20);
 //    }
     
-    for(auto &blob : contourFinder.blobs){
-        ofSetColor(ofColor::violet);
+//    for(auto &blob : contourFinder.blobs){
+//        ofSetColor(ofColor::violet);
+//        ofFill();
+//        ofDrawEllipse(blob.centroid, 20,20);
+//    }
+//
+    
+    int numBlobs = contourFinder.blobs.size();
+
+ for (int i = 0; i < numBlobs; ++i){
+        ofxCvBlob & blob = contourFinder.blobs[i];
+        ofVec2f c( blob.centroid.x, blob.centroid.y );
+        ofVec2f v = p - c;
+        float d = v.length();
+        float f = 10000 / d / d;
+        v = v.getNormalized() * f;
+        p += v;
+        
         ofFill();
-        ofDrawEllipse(blob.centroid, 20,20);
+        ofSetColor(50,10,20);
+        ofCircle( p.x, p.y, 30 );
+
     }
+    
     
 	ofPopMatrix();
 	

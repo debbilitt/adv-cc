@@ -4,7 +4,7 @@
 #include "ofxGui.h"
 #include "owen.h"
 #include "ofxOpenCv.h"
-#define NOWENS 5
+
 
 class ofApp : public ofBaseApp{
 
@@ -30,11 +30,13 @@ class ofApp : public ofBaseApp{
     ofSoundPlayer wow2;
     ofSoundPlayer wow3;
     ofSoundPlayer wow4;
-
+    
+//    ofVec2f owenPos;
     
     ofImage owen;
     ofImage wowtron;
     
+
 
     //webcam detection
     
@@ -46,12 +48,11 @@ class ofApp : public ofBaseApp{
     
     ofxCvContourFinder myContourFinder;
 
+
     int 			threshold;
     bool			bLearnBackground;
     bool			bShowVideo = true;
     
-    
-    //owen object
 
     vector <Owen> multiOwens;
     

@@ -19,9 +19,9 @@ public:
     void update();
     void draw();
     
-    bool if_close;
+    bool distanceClose;
 
-    void checkDistance(ofVec2f _contour); //check its distance to the other vector
+    void checkDistance(); //check its distance to the other vector
 
     // variables
     float pointX;   // position
@@ -42,6 +42,7 @@ public:
     
     /*load an owen*/
     ofImage owenTest;
+
     
     
     /*texture wrapping*/
